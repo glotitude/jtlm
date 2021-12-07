@@ -28,5 +28,7 @@ launch -> _ {
         print(i);
     }
 
+    print(player.coords);
+
     print(foo()(1, 2));
 }

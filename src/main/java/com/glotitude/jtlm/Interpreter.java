@@ -168,6 +168,20 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     }
 
     @Override
+    public Object visitGetExpr(Expr.Get expr) {
+        Object object = evaluate(expr.object);
+        if (object instanceof Map) {
+            if (!((Map) object).containsKey(expr.name.lexeme)) {
+                throw new RuntimeError(expr.name, "No such key in the dict.");
+            }
+
+            return ((Map) object).get(expr.name.lexeme);
+        }
+
+        throw new RuntimeError(expr.name, "Only dicts have properties.");
+    }
+
+    @Override
     public Object visitGroupingExpr(Expr.Grouping expr) {
         return evaluate(expr.expression);
     }

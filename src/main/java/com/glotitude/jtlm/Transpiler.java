@@ -135,6 +135,11 @@ public class Transpiler implements Expr.Visitor<Object>, Stmt.Visitor<Void>, Clo
     }
 
     @Override
+    public Object visitGetExpr(Expr.Get expr) {
+        return null;
+    }
+
+    @Override
     public Object visitGroupingExpr(Expr.Grouping expr) {
         return evaluate(expr.expression);
     }
