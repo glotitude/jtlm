@@ -176,6 +176,8 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             }
 
             return ((Map) object).get(expr.name.lexeme);
+        } else if (object instanceof List) {
+            return ((List)object).get(((Double)expr.name.literal).intValue());
         }
 
         throw new RuntimeError(expr.name, "Only dicts have properties.");
@@ -208,18 +210,23 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     public Object visitSetExpr(Expr.Set expr) {
         Object object = evaluate(expr.object);
 
-        if (!(object instanceof Map)) {
+        if (!(object instanceof Map || object instanceof List)) {
             throw new RuntimeError(expr.name,
-                    "Only dicts have fields.");
+                    "Only dicts or arrays have fields.");
         }
 
         Object value = evaluate(expr.value);
 
-        if (!((Map) object).containsKey(expr.name.lexeme)) {
+        if (object instanceof Map && !((Map) object).containsKey(expr.name.lexeme)) {
             throw new RuntimeError(expr.name, "No such key in the dict.");
         }
 
-        ((Map)object).put(expr.name.lexeme, value);
+        if (object instanceof List) {
+            ((List)object).set(((Double) expr.name.literal).intValue(), value);
+        } else {
+            ((Map) object).put(expr.name.lexeme, value);
+        }
+
         return value;
     }
 

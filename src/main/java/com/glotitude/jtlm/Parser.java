@@ -301,8 +301,13 @@ public class Parser {
             if (match(LEFT_PAREN)) {
                 expr = finishCall(expr);
             } else if (match(DOT)) {
-                Token name = consume(IDENTIFIER, "Expect property name after '.'.");
-                expr = new Expr.Get(expr, name);
+                if (check(IDENTIFIER)) {
+                    Token name = consume(IDENTIFIER, "Expect property name after '.'.");
+                    expr = new Expr.Get(expr, name);
+                } else if (check(NUMBER)) {
+                    Token name = consume(NUMBER, "Expect property name after '.'.");
+                    expr = new Expr.Get(expr, name);
+                }
             } else {
                 break;
             }

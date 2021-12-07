@@ -18,7 +18,11 @@ launch -> _ {
     for i in 0..10 {
         var line = '';
         for j in 0..10 {
-            line = line + '.';
+            if player.coords.x == j and player.coords.y == i {
+                line = line + player.symbol;
+            } else {
+                line = line + '.';
+            }
         }
         print(line);
     }
@@ -31,6 +35,13 @@ launch -> _ {
     print(player.coords);
     player.coords.x = 10;
     print(player.coords);
+
+    var arr = [1, 2, 3];
+    print(arr);
+    arr.0 = 10;
+    print(arr);
+
+    print(arr.0);
 
     print(foo()(1, 2));
 }
