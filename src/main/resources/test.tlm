@@ -29,6 +29,8 @@ launch -> _ {
     }
 
     print(player.coords);
+    player.coords.x = 10;
+    print(player.coords);
 
     print(foo()(1, 2));
 }

@@ -163,6 +163,11 @@ public class Transpiler implements Expr.Visitor<Object>, Stmt.Visitor<Void>, Clo
     }
 
     @Override
+    public Object visitSetExpr(Expr.Set expr) {
+        return null;
+    }
+
+    @Override
     public Object visitUnaryExpr(Expr.Unary expr) {
         Object right = evaluate(expr.right);
 

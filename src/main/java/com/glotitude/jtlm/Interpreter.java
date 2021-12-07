@@ -205,6 +205,25 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     }
 
     @Override
+    public Object visitSetExpr(Expr.Set expr) {
+        Object object = evaluate(expr.object);
+
+        if (!(object instanceof Map)) {
+            throw new RuntimeError(expr.name,
+                    "Only dicts have fields.");
+        }
+
+        Object value = evaluate(expr.value);
+
+        if (!((Map) object).containsKey(expr.name.lexeme)) {
+            throw new RuntimeError(expr.name, "No such key in the dict.");
+        }
+
+        ((Map)object).put(expr.name.lexeme, value);
+        return value;
+    }
+
+    @Override
     public Object visitUnaryExpr(Expr.Unary expr) {
         Object right = evaluate(expr.right);
 
