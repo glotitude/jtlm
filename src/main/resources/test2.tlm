@@ -1,0 +1,28 @@
+var enemies = [];
+var player = {
+    health: 100,
+    strength: 3,
+};
+
+launch -> _ {
+    repeat 60, _ => emit tick;
+}
+
+tick -> _ {
+    emit render;
+}
+
+render -> _ {
+    for y in 0..50 {
+        for x in 0..50 {
+            if player.x == x and player.y == y {
+                print player.symbol;
+            } else if renderEnemy(x, y).symbol != null {
+                print renderEnemy(x, y).symbol;
+            } else {
+                print '.';
+            }
+        }
+        print '\n';
+    }
+}

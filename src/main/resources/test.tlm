@@ -1,0 +1,32 @@
+var player = {
+    symbol: '@',
+    coords: {
+        x: 5,
+        y: 3,
+    }
+};
+
+_ -> foo {
+    _ -> add a, b {
+        return a + b;
+    }
+
+    return add;
+}
+
+launch -> _ {
+    for i in 0..10 {
+        var line = '';
+        for j in 0..10 {
+            line = line + '.';
+        }
+        print(line);
+    }
+
+    var l = [{name: 'A'}, {name: 'B'}, {name: 'C'}];
+    for i in l {
+        print(i);
+    }
+
+    print(foo()(1, 2));
+}
